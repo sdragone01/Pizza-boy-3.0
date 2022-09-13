@@ -1,21 +1,23 @@
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 import 'firebase/compat/firestore';
+import { getDatabase } from 'firebase/database';
 
 
 const config = {
-    apiKey: "AIzaSyCfpb8BF3puSorD3yaxpO_GO35_LMLPUZ0",
-    authDomain: "pizzaboy-a7ab6.firebaseapp.com",
-    databaseURL: "https://pizzaboy-a7ab6-default-rtdb.firebaseio.com",
-    projectId: "pizzaboy-a7ab6",
-    storageBucket: "pizzaboy-a7ab6.appspot.com",
-    messagingSenderId: "453084038974",
-    appId: "1:453084038974:web:7d2aa691496038100cce6f",
-    measurementId: "G-9KJQJ1G6Z9"
+    apiKey: "AIzaSyAnhTX6iwvJhCs-8ofXFLBwavGYapWEWPQ",
+    authDomain: "pizzaboy3-3e63b.firebaseapp.com",
+    projectId: "pizzaboy3-3e63b",
+    storageBucket: "pizzaboy3-3e63b.appspot.com",
+    messagingSenderId: "297920974497",
+    appId: "1:297920974497:web:3e24a113edbcdf5e95aae0",
+    measurementId: "G-D780RV76TC",
+    databaseURL: "https://pizzaboy3-3e63b-default-rtdb.firebaseio.com/"
 };
 
 const fire = firebase.initializeApp(config);
-const db = firebase.firestore();
 const auth = firebase.auth();
-export { db, auth };
+const database = getDatabase(fire);
+
+export { database, auth };
 export default fire;

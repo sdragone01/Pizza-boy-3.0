@@ -4,7 +4,7 @@ import fire from '../config/Fire';
 import Login from './Forms/Login';
 import Register from './Forms/Register';
 import Spinner from '../assets/loader.gif';
-import Tracker from './Tracker/Tracker';
+import Home from './Home'
 import Logo from '../assets/logo.png';
 
 export default class Main extends Component {
@@ -67,7 +67,7 @@ export default class Main extends Component {
                             }
                         </div>
                     </>
-                ) : (<Tracker />)}
+                ) : (<Home />)}
             </>
         );
     }
