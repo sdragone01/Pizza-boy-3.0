@@ -11,25 +11,81 @@ import Button from '@mui/material/Button';
 import { sizing } from '@mui/system';
 import './Dash.css'
 import fire from '../config/Fire';
-import { getDatabase, ref, onValue, query } from "firebase/database";
+import { getDatabase, ref, onValue, query, orderByChild } from "firebase/database";
 
 
 export default function Dash() {
+
     var currentUser = fire.auth().currentUser.uid
     const db = getDatabase();
-    const cashOrderRef = ref(db, 'cashOrder/' + currentUser)
-    onValue(cashOrderRef, (snapshot1) => {
-        const data1 = snapshot1.val();
-        console.log(data1);
-    });
-    const creditOrderRef = ref(db, 'creditOrders/' + currentUser)
-    onValue(creditOrderRef, (snapshot2) => {
-        const data2 = snapshot2.val();
-        console.log(data2);
+    var totalCashDue = [];
+    var totalCashReceived = [];
+    var totalCashTip = [];
+    var totalCreditTip = [];
+
+    const cashOrderData = query(ref(db, 'cashOrders/' + currentUser));
+    onValue(cashOrderData, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const childData = childSnapshot.val();
+            totalCashDue.push(childData.cashDue)
+            totalCashReceived.push(childData.cashReceived)
+
+
+        });
 
     });
 
+    const creditOrderData = query(ref(db, 'creditOrders/' + currentUser));
+    onValue(creditOrderData, (snapshot) => {
+        snapshot.forEach((childSnapshot) => {
+            const childData = childSnapshot.val();
+            totalCashTip.push(childData.cashTip)
+            totalCreditTip.push(childData.creditTip)
 
+
+        });
+
+    });
+
+
+
+
+
+    var numTotalCashDue = totalCashDue.map(Number);
+    var numTotalCashReceived = totalCashReceived.map(Number);
+    var numTotalCashTip = totalCashTip.map(Number);
+    var numTotalCreditTip = totalCreditTip.map(Number);
+
+    console.log(numTotalCashDue);
+    console.log(numTotalCashReceived);
+    console.log(numTotalCashTip);
+    console.log(numTotalCreditTip);
+
+    var totalCashDueSum = numTotalCashDue.reduce((a, b) => a + b, 0);
+    var totalCashReceivedSum = numTotalCashReceived.reduce((a, b) => a + b, 0);
+    var totalCashTipSum = numTotalCashTip.reduce((a, b) => a + b, 0);
+    var totalCreditTipSum = numTotalCreditTip.reduce((a, b) => a + b, 0);
+
+    console.log(totalCashDueSum);
+    console.log(totalCashReceivedSum);
+    console.log(totalCashTipSum);
+    console.log(totalCreditTipSum);
+
+    var cashOrderTips = totalCashReceivedSum - totalCashDueSum;
+    var totalTips = totalCreditTipSum + totalCashTipSum + cashOrderTips;
+
+    console.log(cashOrderTips);
+    console.log(totalTips);
+
+    const fixedDue = totalCashDueSum.toFixed(2);
+    const fixedReceived = totalCashReceivedSum.toFixed(2);
+    const fixedCashTips = cashOrderTips.toFixed(2);
+    const fixedCreditTips = totalCreditTipSum.toFixed(2);
+
+    console.log(fixedDue);
+    console.log(fixedReceived);
+    console.log(fixedCashTips);
+    console.log(fixedCreditTips);
 
 
 

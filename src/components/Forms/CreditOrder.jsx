@@ -40,7 +40,8 @@ export default class CreditOrder extends Component {
         const { orderNum, cashTip, creditTip, currentUID } = this.state;
         const db = getDatabase();
         const userId = this.state.currentUID;
-        push(ref(db, 'creditOrders/'), {
+        push(ref(db, 'creditOrders/' + userId), {
+
             orderNum,
             cashTip,
             creditTip,

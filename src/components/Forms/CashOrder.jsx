@@ -19,6 +19,7 @@ export default class CashOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
+
             orderNum: '',
             cashDue: '',
             cashReceived: '',
@@ -41,8 +42,7 @@ export default class CashOrder extends Component {
         const db = getDatabase();
 
 
-
-        push(ref(db, 'cashOrders/'), {
+        push(ref(db, 'cashOrders/' + currentUID), {
             orderNum,
             cashDue,
             cashReceived,
