@@ -74,6 +74,7 @@ export default class CashOrder extends Component {
                             name="orderNum"
                             value={this.state.orderNum}
                             onChange={this.handleChange}
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9]*' }}
                         />
 
 
